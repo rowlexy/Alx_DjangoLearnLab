@@ -17,7 +17,7 @@ def list_of_books(library_name):
         return f"{library_name} not found"
 def librarian_for_library(librarian_name):
     try:
-        library = Librarian.objects.get(name=librarian_name)
+        library = Librarian.objects.get(library=librarian_name)
         librarian = library.librarian
         return librarian
     except Library.DoesNotExist:
