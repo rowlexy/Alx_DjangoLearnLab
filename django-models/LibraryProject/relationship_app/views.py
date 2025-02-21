@@ -5,9 +5,11 @@ from django.views.generic import DetailView
 # Create your views here.
 def list_of_books(request):
     books = Book.objects.all()
-    book_list = [f"{book.title} {book.author.name}" for book in books]
-    context = "\n".join(book_list)
-    return HttpResponse(context, content_type="text/plain")
+    context = {
+        "books": books
+    }
+
+    return render(request, "relationship_app/book_list.html", context)
 
 class LibraryDetailView(DetailView):
    model = Library 
