@@ -1,11 +1,16 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
+from django.shortcuts import render
+from django.shortcuts import redirect
+
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Book
 from .models import Library
 from django.views.generic.detail import DetailView
+
 # Create your views here.
 
 def register(request):
