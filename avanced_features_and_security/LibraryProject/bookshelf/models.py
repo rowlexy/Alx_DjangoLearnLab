@@ -1,6 +1,9 @@
+from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.conf import settings
+
+# Create your models here.
 
 class CustomUserManager(BaseUserManager):
 
@@ -32,41 +35,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
     
-from django.db import models
-from django.contrib.auth.models import User
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-
-# Create your models here.
-class Author(models.Model):
-    name = models.CharField(max_length=200)
-    def __str__(self):
-        return self.name
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"{self.title} {self.author}"
-
-class Library(models.Model):
-    name = models.CharField(max_length=200)
-    books = models.ManyToManyField(Book)
-    def __str__(self):
-        return f"{self.name} {self.books}"
-    
-class Librarian(models.Model):
-    name = models.CharField(max_length=200)
-    library = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"{self.name} {self.library}"
-
-class UserProfile(models.Model):
-    ROLE_CHOICES = [
-        ('Admin', 'Admin'),
-        ('Librarian', 'Librarian'),
-        ('Member', 'Member')
-    ]
+class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    role = models.CharField(choices=ROLE_CHOICES, default='Member')
+    bio = models.TextField(blank=True)
+
     def __str__(self):
-        return f"{self.user.username} - {self.role}"
+        return self.user.username
