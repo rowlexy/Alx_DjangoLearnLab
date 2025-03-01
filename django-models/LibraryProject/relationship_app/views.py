@@ -11,6 +11,7 @@ from .models import Book
 from .models import Library
 from django.views.generic.detail import DetailView
 
+from .models import role_required
 # Create your views here.
 
 def register(request):
@@ -60,3 +61,15 @@ class LibraryDetailView(DetailView):
        context = super().context_data(**kwargs)
        context["books"] = self.object.books.all()
        return context
+
+@role_required('Admin')
+def admin_dashboard(request):
+    return render(request, 'admin_dashboard.html')
+
+@role_required('Librarian')
+def librarian_dashboard(request):
+    return render(request, 'relationship_app/librarian_dashboard.html')
+
+@role_required('Member')
+def member_dashboard(request):
+    return render(request, 'relationship_app/member_dashboard.html')
